@@ -31,6 +31,9 @@ require LIB.'ip_based_access.inc.php';
 do_checkIP('opac');
 // member session params
 require LIB.'member_session.inc.php';
+// custom function 
+require LIB.'custom.inc.php';
+
 // start session
 session_start();
 if ($sysconf['template']['base'] == 'html') {
