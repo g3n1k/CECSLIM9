@@ -23,6 +23,9 @@
  */
 
 // be sure that this file not accessed directly
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 if (!defined('INDEX_AUTH')) {
   die("can not access this file directly");
@@ -1576,7 +1579,8 @@ include "translation.php"
 					  <?php
 					  $att = $dbs->query("SELECT files.mime_type as mime_type, files.file_title as file_title,
 												files.file_id as file_id, files.file_desc as file_desc,
-												files.file_url as file_url, biblio_attachment.biblio_id as biblio_id
+												files.file_url as file_url, biblio_attachment.biblio_id as biblio_id,
+                                                files.file_url as file_dir, files.file_name as file_name
 												FROM biblio_attachment
 												LEFT JOIN files ON biblio_attachment.file_id = files.file_id
 												WHERE biblio_attachment.biblio_id = '$id'");
@@ -1722,6 +1726,7 @@ include "translation.php"
 					</div>
 				</div>
 			  </div>
+<!-- ini terbaru -->              
 			  <div class="col-md-4 sidebar">
 				<div class="item">
 					<h2><?php echo e("Terbaru") ?></h2>

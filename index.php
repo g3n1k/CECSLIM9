@@ -106,8 +106,9 @@ if (isset($_GET['p'])) {
     }
     include LIB.'contents/default.inc.php';
 }
+
 // main content grab
 $main_content = ob_get_clean();
-// die($sysconf['template']['dir'].'/'.$sysconf['template']['theme'].'/index_template.inc.php');
+
 // template output
 require $sysconf['template']['dir'].'/'.$sysconf['template']['theme'].'/index_template.inc.php';

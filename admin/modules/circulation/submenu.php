@@ -30,3 +30,18 @@ $menu[] = array(__('Loan Rules'), MWB.'circulation/loan_rules.php', __('View and
 $menu[] = array(__('Loan History'), MWB.'reporting/customs/loan_history.php', __('Loan History Overview'));
 $menu[] = array(__('Overdued List'), MWB.'reporting/customs/overdued_list.php', __('View Members Having Overdues'));
 $menu[] = array(__('Reservation'), MWB.'reporting/customs/reserve_list.php', __('Reservation'));
+
+$menu[] = array('Header', __('Comments'));
+$menu[] = array(__('Comments List'), MWB.'circulation/comment.php', __('List Comment'));
+$menu[] = array(__('Email Spam'), MWB.'circulation/comment_spam_email.php', __('Email Spam'));
+$menu[] = array(__('IP Spam'), MWB.'circulation/comment_spam_ip.php', __('IP Spam'));
+
+$menu[] = array('Header', __('Activity Log'));
+$menu[] = array(__('Activity Index'), MWB.'korupsi/al_index.php', __('List of Book activities'));
+$menu[] = array(__('Activity Index Lokal'), MWB.'korupsi/al_index_lokal.php', __('List of Local Book activities'));
+$menu[] = array(__('Activity Read'), MWB.'korupsi/al_new.php', __('Input Log Activity'));
+
+$menu[] = array('Header', __('Activity Sarasehan'));
+$menu[] = array(__('Index'), MWB.'korupsi/as_index.php', __('Show Existing Bibliographic Data'));
+$menu[] = array(__('Add New Activity'), MWB.'korupsi/as_new.php', __('Add New Bibliographic Data/Catalog'));
+$menu[] = array(__('Show on Landing'), MWB.'korupsi/as_displ.php', __('cek'));

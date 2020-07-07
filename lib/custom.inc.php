@@ -103,7 +103,7 @@ function uri_secure($_ = array(), $_regx = "/[^-a-z0-9\\/]+/i"){
 
 	$_subs = '';
 	
-	foreach($_ as $_var=>$_val) $_[$_var] = preg_replace($_regx, $_subs, $_val);
+	foreach($_ as $_var=>$_val) $_[$_var] = @preg_replace($_regx, $_subs, $_val);
 	
 	return $_;
 }

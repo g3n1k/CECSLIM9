@@ -30,7 +30,7 @@ if (!defined('INDEX_AUTH')) {
 }
 ?>
 <!--
-==========================================================================
+==========================================================================LL
    ___  __    ____  __  __  ___      __    _  _    __    ___  ____    __
   / __)(  )  (_  _)(  \/  )/ __)    /__\  ( )/ )  /__\  / __)(_  _)  /__\
   \__ \ )(__  _)(_  )    ( \__ \   /(__)\  )  (  /(__)\ \__ \ _)(_  /(__)\
@@ -53,7 +53,7 @@ include "partials/meta.php"; ?>
   <!-- Login
   ============================================= -->
   <main id="content" class="s-main s-login" role="main">
-    <div class="s-login-content animated flipInY delay9">
+    <div class="s-login-content animated flipInY delay9"> 
       <?php echo $main_content; ?>
     </div>
   </main>

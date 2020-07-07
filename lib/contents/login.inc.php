@@ -86,6 +86,24 @@ if (isset($_POST['logMeIn'])) {
                     }
                 } elseif ($sysconf['captcha']['smc']['type'] == 'others') {
                     # other captchas here
+                    $_captcha_valid = true;
+		
+                    if($sysconf['captcha']['enable'] == true ) {
+                    
+                        if($sysconf['captcha']['type'] == 'captcha') 
+                            
+                            $_captcha_valid = $_SESSION[$sysconf['captcha']['variable']] == $_POST['captcha'] ? true : false;
+                        
+                        else // recaptcha
+
+                            $_captcha_valid = utility::cek_recaptcha($_POST['g-recaptcha-response'], $sysconf['recaptcha']['secret']) ;
+
+                        if(!$_captcha_valid){
+                            session_unset();
+                            header("location:index.php?p=login");
+                            die();
+                        }
+                    }
                 }
             }
             # <!-- Captcha form processing - end -->
@@ -219,27 +237,44 @@ if (isset($_POST['updatePassword'])) {
           <?php if ($sysconf['captcha']['smc']['type'] == "recaptcha") { ?>
           <div class="captchaAdmin">
           <?php
+
             require_once LIB.$sysconf['captcha']['smc']['folder'].'/'.$sysconf['captcha']['smc']['incfile'];
             $publickey = $sysconf['captcha']['smc']['publickey'];
             echo recaptcha_get_html($publickey);
+          
           ?>
           </div>
           <!-- <div><input type="text" name="captcha_code" id="captcha-form" style="width: 80%;" /></div> -->
         <?php 
           } elseif ($sysconf['captcha']['smc']['type'] == "others") {
 
-          }
+                ?>
+                <div class="input-field col-sm-12">
+                    <div class="form-group">
+                        <img src="lib/captcha.php?<?php echo time();?>" />
+                    </div>								 
+                </div>
+
+                <div class="input-field col-sm-12">
+                    <div class="form-group">
+                            <input id="form-captcha" name="captcha" type="text" placeholder="<?php echo __("Captcha")?>" required="required"
+                            data-error="<?php echo __("Captcha tidak boleh kosong")?>.">
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+<?php       
+
+          }     
           #debugging
           #echo SWB.'lib/'.$sysconf['captcha']['folder'].'/'.$sysconf['captcha']['webfile'];
         } ?>
         <!-- Captcha in form - end -->
-
         <div class="marginTop">
         <div class="remember_forgot">
             <div class="remember">
                 <?php if ($sysconf['always_user_login']) : ?>
                 <input type="checkbox" id="remember_me" name="remember" value="1">
-                <label for="remember_me">Remember me</label>
+                <label for="remember_me" style="color:#000;">Remember me</label>
                 <?php endif; ?>
             </div>
         </div>

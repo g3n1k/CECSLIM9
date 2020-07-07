@@ -1146,7 +1146,7 @@ if(isset($_GET['search']) || isset($_GET['p'])) {
                   <h3><?php echo $buku['title']?></h3>
                   <p class="pagination">
                     <small>
-                      Dipinjam : <?php echo $jml_pinjam ?> | &nbsp;
+                      Dipinjam : <?php echo $jml_pinjam ?> | &nbsp;XYZ
                       Dibaca : <?php echo $jml_baca ?> | &nbsp;
                       Dikunjungi : <?php echo $jml_pengunjung ?>
                     </small>

@@ -612,4 +612,95 @@ class utility
       // Entity not found? Destroy it.
       return isset($_ent_table[$str_xml_data[1]]) ? $_ent_table[$str_xml_data[1]] : '';
     }
+
+
+    public static function set_token($_length = 32){
+        
+    #    session_start();
+
+        $_time = time(); // makesure its unique & konsisten
+
+        $_expired = $_SESSION['csrf_expire'] < $_time ? false : true;
+
+        if(!isset($_SESSION['csrf_expire']) OR empty($_SESSION['csrf_expire']) OR $_expired) 
+        
+            $_SESSION['csrf_expire'] = $_time + 3600; # 1 one hour
+        
+        if(!isset($_SESSION['csrf_token']) OR empty($_SESSION['csrf_token']) OR $_expired) 
+            
+            $_SESSION['csrf_token']  = hash_hmac('md5', $_time.utility::createRandomString(8), 'CrumBl3d Str1ng');
+
+        return $_SESSION['csrf_token'];
+    }
+    
+    public static function cek_token($_token='', $debug=0){
+
+    #    session_start();
+
+        $_status = false;
+        
+        $_time = time();
+
+        if ($_SESSION['csrf_token'] == $_token AND $_time < $_SESSION['csrf_expire']) $_status = true;
+        
+        if($debug){
+            
+            echo "Token : ". $_SESSION['csrf_token'] . "<br />";
+            echo "POST: ". $_token . "<br />";
+            echo "Time  : ". $_time ."<br />";
+            echo "Expire : ". $_SESSION['csrf_expire'] ."<br />";
+            $_exp = $_SESSION['csrf_expire'] < $_time ? 'Yes':'No';
+            echo "is Expired ".$_exp."<br />";
+        } 
+
+        return $_status;
+    }
+
+    public static function filter_number($_num = 0){
+        return filter_var($_num, FILTER_SANITIZE_NUMBER_INT);
+    }
+
+    public static function filter_email($_email = ''){
+        return filter_var($_email,  FILTER_SANITIZE_EMAIL);
+    }
+
+    public static function filter_string($_str=''){ 
+        
+        $_ = filter_var($_str, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW | FILTER_FLAG_ENCODE_HIGH | FILTER_FLAG_ENCODE_AMP);
+        
+        $_ = str_replace( array('<',';','|','&','>',"'",'"',')','('), array('&lt;','&#58;','&#124;','&#38;','&gt;','&apos;','&#x22;','&#x29;','&#x28;'), $_ );
+        
+        $_ = str_ireplace( '%3Cscript', '', $_ );
+        
+        return $_;
+    }
+
+    public static function cek_recaptcha($user_response, $_inp_secret = false) {
+        
+        # key untuk 127.0.0.1
+        $_key_site = '6Ld-XZUUAAAAAEnfiecJOlof1u-rDYCGafudC-Jm';
+        $_key_secret = $_inp_secret ? $_inp_secret : '6Ld-XZUUAAAAAFPaxhdz4OmyCLa2jPOIRvw1epcH';
+
+        $fields_string = '';
+        $fields = array(
+            'secret' => $_key_secret,
+            'response' => $user_response
+        );
+        foreach($fields as $key=>$value)
+        $fields_string .= $key . '=' . $value . '&';
+        $fields_string = rtrim($fields_string, '&');
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://www.google.com/recaptcha/api/siteverify');
+        curl_setopt($ch, CURLOPT_POST, count($fields));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, True);
+
+        $result = curl_exec($ch);
+        curl_close($ch);
+
+        $_ = json_decode($result, true);
+
+        return $_['success'];
+    }
 }

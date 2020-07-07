@@ -316,7 +316,7 @@ include "partials/meta_new.php";
                                   </small>
                                   <br>
                                   <a>
-                                    <small>Dipinjam : <?php echo $value['pinjam'] ?> <br> Dibaca : <?php echo $value['pembaca'] ?> <br> Dikunjungi : <?php echo $value['visitor'] ?></small>
+                                    <small>Dipinjam x: <?php echo $value['pinjam'] ?> <br> Dibaca : <?php echo $value['pembaca'] ?> <br> Dikunjungi : <?php echo $value['visitor'] ?></small>
                                   </a>
                                   <br>
                                 <div class="team-profile">

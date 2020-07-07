@@ -1,6 +1,6 @@
 <div class="s-detail animated delay9 fadeInUp" itemscope itemtype="http://schema.org/Book" vocab="http://schema.org/" typeof="Book">
   
-  <!-- Book Cover
+  <!-- Book Cover XYZ
   ============================================= -->
   <div class="cover">
     <?php echo $image ?>

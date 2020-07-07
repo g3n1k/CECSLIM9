@@ -471,8 +471,9 @@ $sysconf['index']['engine']['es_opts'] = array(
  * Captcha Settings
  */
 // Captcha settings for Senayan Management Console (aka Librarian Login)
-$sysconf['captcha']['smc']['enable'] = false; // value can be 'true' or 'false'
-$sysconf['captcha']['smc']['type'] = 'recaptcha'; // value can be 'recaptcha' (at this time)
+$sysconf['captcha']['smc']['enable'] = true; // value can be 'true' or 'false'
+// $sysconf['captcha']['smc']['type'] = 'recaptcha'; // value can be 'recaptcha' (at this time)
+$sysconf['captcha']['smc']['type'] = 'others'; // other
 if ($sysconf['captcha']['smc']['enable']) {
     include_once LIB.$sysconf['captcha']['smc']['type'].DS.'smc_settings.inc.php';
 }
@@ -483,6 +484,14 @@ $sysconf['captcha']['member']['type'] = 'recaptcha'; // value can be 'recaptcha'
 if ($sysconf['captcha']['member']['enable']) {
     include_once LIB.$sysconf['captcha']['member']['type'].DS.'member_settings.inc.php';
 }
+
+// Captcha settings for Member Login
+$sysconf['captcha']['member']['enable'] = false; // value can be 'true' or 'false'
+$sysconf['captcha']['member']['type'] = 'recaptcha'; // value can be 'recaptcha' (at this time)
+if ($sysconf['captcha']['member']['enable']) {
+    include_once LIB.$sysconf['captcha']['member']['type'].DS.'member_settings.inc.php';
+}
+
 
 /**
  * Mailing Settings
@@ -712,3 +721,44 @@ $sysconf['api']['version'] = 1;
 $sysconf['visitor_lang'] = 'hi-IN'; // Please visit this URL for voice mode - https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis/getVoices
 
 $sysconf['always_user_login'] = true;
+
+
+// replace unpermitted uri 
+$sysconf['permitted_uri'] = "/[^-a-z0-9@_\=\-\.\\/]+/i";
+$sysconf['permitted_inp'] = "/[^-a-z0-9@_\-\.\\/\ \:\=]+/i";
+
+
+// membuat fungsi baru captcha sendiri
+// karena slim tidak menyediakan selain recaptcha
+$sysconf['captcha']['enable'] = true; // true or false
+// captcha atau recaptcha
+$sysconf['captcha']['type']   = 'captcha';//'captcha'; // recaptcha
+// what chars to enable in captcha 
+$sysconf['captcha']['chars'] = 'abcdefghijklmnopqrstuvwxyz1234567890';
+// chaptcha length chars 
+$sysconf['captcha']['length'] = 5;
+// fonts using for captcha, this file ttf same as folder captcha.php (in folder lib)
+$sysconf['captcha']['fonts'] = [
+  '../admin/modules/korupsi/export/vendor/mpdf/mpdf/ttfonts/ocrb10.ttf', 
+  '../admin/modules/korupsi/export/vendor/mpdf/mpdf/ttfonts/FreeMono.ttf', 
+  '../admin/modules/korupsi/export/vendor/mpdf/mpdf/ttfonts/Garuda.ttf'
+];
+// this variable session using, just for avoid same session array value
+$sysconf['captcha']['variable'] = '_captcha';
+
+
+/**
+ * Mailing Settings
+ */
+$sysconf['mail']['enable'] = true;
+$sysconf['mail']['host'] = 'smtp.gmail.com';
+$sysconf['mail']['port'] = 465;
+$sysconf['mail']['smtpsecure'] = 'ssl'; 
+$sysconf['mail']['smtpauth'] = true; 
+$sysconf['mail']['username'] = "gwmaingame01@gmail.com"; // SMTP account username
+$sysconf['mail']['password'] = "123654aaA."; // SMTP account password
+$sysconf['mail']['smtpdebug'] = 0; // debug 1 0 non debug
+$sysconf['mail']['tujuan_email'] = 'indra.sadik@gmail.com'; 
+$sysconf['mail']['tujuan_nama'] = 'indra sadik'; 
+
+
