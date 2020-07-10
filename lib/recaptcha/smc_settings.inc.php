@@ -3,8 +3,8 @@
 $sysconf['captcha']['smc']['folder'] = 'recaptcha'; // folder name inside the SENAYAN_LIB_DIR folder
 $sysconf['captcha']['smc']['incfile'] = 'recaptchalib-v2.php'; // php file that needs to be included in php file
 $sysconf['captcha']['smc']['webfile'] = ''; // php file that needs to accessed to create captcha image
-$sysconf['captcha']['smc']['publickey'] = '6LdCzFAUAAAAAKV0pEX3h3523MZA5ATRZf2GpgQC'; // some captcha providers need this. Ajdust it with yours
-$sysconf['captcha']['smc']['privatekey'] = '6LdCzFAUAAAAABb8kVMaf97GiQFP9lfX56BPhhGs'; // some captcha providers need this. Ajdust it with yours
+$sysconf['captcha']['smc']['publickey'] = '6Lcaeq8ZAAAAAPCda_PFoa2mrHk-n7maXrzg5pFt'; // some captcha providers need this. Ajdust it with yours
+$sysconf['captcha']['smc']['privatekey'] = '6Lcaeq8ZAAAAALULd7mWqtPbiCOCxKZXP7r1dmUf'; // some captcha providers need this. Ajdust it with yours
 
 $sysconf['captcha']['smc']['recaptcha']['theme'] = 'clean'; // Possible values: 'red' | 'white' | 'blackglass' | 'clean' | 'custom'
 $sysconf['captcha']['smc']['recaptcha']['lang'] = 'en'; // Possible values: 'en' (english) | 'nl' (Dutch) | 'fr' (French) | 'de' (German) | 'pt' (Portuguese) | 'ru' (Russian) | 'es' (Spanish) | 'tr' (Turkish)

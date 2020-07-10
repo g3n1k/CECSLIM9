@@ -1693,7 +1693,21 @@ include "translation.php"
 										  <div class="help-block with-errors"></div>
 									  </div>
 								  </div>
-<?php if( $sysconf['captcha']['type'] == 'captcha' ){ ?> 
+<!-- recaptcha -->
+
+<?php
+if ($sysconf['captcha']['smc']['enable']) {
+	if ($sysconf['captcha']['smc']['type'] == "recaptcha") {
+		require_once LIB.$sysconf['captcha']['smc']['folder'].'/'.$sysconf['captcha']['smc']['incfile'];
+		$publickey = $sysconf['captcha']['smc']['publickey'];
+		echo '<div class="input-field col-sm-12">';
+		echo recaptcha_get_html($publickey);
+		echo '</div>';
+	}
+}
+?>
+
+<?php if( $sysconf['captcha']['type'] == 'captcha' ){ /* //?> 
 								  <div class="input-field col-sm-12">
 									  <div class="form-group">
 									  	<img src="lib/captcha.php?<?php echo time();?>" />
@@ -1707,7 +1721,7 @@ include "translation.php"
 										  <div class="help-block with-errors"></div>
 									  </div>
 								  </div>
-<?php } ?>								 
+<?php } */ } ?>								 
 	
 								  <div class="col-sm-12">
 									<?php if( $sysconf['captcha']['type'] == 'captcha' ){ ?> 
@@ -1756,20 +1770,26 @@ include "translation.php"
 	  <?php } ?>
 	<?php } elseif ($_GET['h'] == 'komentar') {
 
-		$_captcha_valid = true;
-		
+if ($sysconf['captcha']['smc']['enable']) {
+	if ($sysconf['captcha']['smc']['type'] == 'recaptcha') {
+		require_once LIB.$sysconf['captcha']['smc']['folder'].'/'.$sysconf['captcha']['smc']['incfile'];
+		$privatekey = $sysconf['captcha']['smc']['privatekey'];
+		$resp = recaptcha_check_answer ($privatekey,
+							  $_SERVER["REMOTE_ADDR"],
+							  $_POST["g-recaptcha-response"]);
+
+		$_captcha_valid = $resp->is_valid;
+
+	} elseif ($sysconf['captcha']['smc']['type'] == 'others') {
+		# other captchas here
+
 		if($sysconf['captcha']['enable'] == true ) {
 		
-			if($sysconf['captcha']['type'] == 'captcha') 
-				
-				$_captcha_valid = $_SESSION[$sysconf['captcha']['variable']] == $_POST['captcha'] ? true : false;
+			$_captcha_valid = $_SESSION[$sysconf['captcha']['variable']] == $_POST['captcha'] ? true : false;
 			
-			else // recaptcha
-
-				$_captcha_valid = utility::cek_recaptcha($_POST['g-recaptcha-response'], $sysconf['recaptcha']['secret']) ;
 		} 
-		
-#		if( utility::cek_token($_POST['token'], 1) && $_captcha_valid ) {
+	}
+}		
         if( $_captcha_valid ) {
 	
 			require_once LIB.'custom.inc.php';
@@ -1779,7 +1799,7 @@ include "translation.php"
 			$email    = strtolower(utility::filter_email($_POST['email']));
 			$komentar = utility::filter_string($_POST['Message']);
 			$tgl      = date('Y-m-d h:i:s');
-			$ip		  	= get_client_ip();
+			$ip		  = get_client_ip();
 			
 			if( not_email_spam($email) ){
 				$q_insert = $dbs->query("INSERT INTO comments VALUES (NULL,'$id','$nama','$email','$komentar','$tgl','$tgl','$ip', 'unpublish')");

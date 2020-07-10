@@ -32,7 +32,7 @@ if (!defined('INDEX_AUTH')) {
  *
  * In production mode, the system error message will be disabled
  */
-define('ENVIRONMENT', 'production');
+define('ENVIRONMENT', 'development');
 
 switch (ENVIRONMENT) {
   case 'development':
@@ -472,12 +472,13 @@ $sysconf['index']['engine']['es_opts'] = array(
  */
 // Captcha settings for Senayan Management Console (aka Librarian Login)
 $sysconf['captcha']['smc']['enable'] = true; // value can be 'true' or 'false'
-// $sysconf['captcha']['smc']['type'] = 'recaptcha'; // value can be 'recaptcha' (at this time)
-$sysconf['captcha']['smc']['type'] = 'others'; // other
+$sysconf['captcha']['smc']['type'] = 'recaptcha'; // value can be 'recaptcha' (at this time)
+// $sysconf['captcha']['smc']['type'] = 'others'; // other
+
 if ($sysconf['captcha']['smc']['enable']) {
     include_once LIB.$sysconf['captcha']['smc']['type'].DS.'smc_settings.inc.php';
 }
-
+/* */
 // Captcha settings for Member Login
 $sysconf['captcha']['member']['enable'] = false; // value can be 'true' or 'false'
 $sysconf['captcha']['member']['type'] = 'recaptcha'; // value can be 'recaptcha' (at this time)
@@ -745,7 +746,6 @@ $sysconf['captcha']['fonts'] = [
 ];
 // this variable session using, just for avoid same session array value
 $sysconf['captcha']['variable'] = '_captcha';
-
 
 /**
  * Mailing Settings

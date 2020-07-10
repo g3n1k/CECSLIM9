@@ -1973,11 +1973,12 @@ keyframes coverUp 100% {
   margin: 0 auto 26px auto;
   background-color: #fff;
   min-height: 100%;
+  color: #000000;
 }
 @media only screen and (min-width: 768px) {
   #loginForm {
     border-radius: 4px;
-    width: 300px;
+    width: 343px;
   }
 }
 .s-login-content {
