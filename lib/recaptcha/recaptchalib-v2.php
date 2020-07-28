@@ -22,11 +22,14 @@ function recaptcha_check_answer($secretKey, $remoteip, $response) {
         'response' => $response,
         'remoteip' => $remoteip
     );
-
+    $query = http_build_query($data);
     $options = array(
         'http' => array(
+            'header' => "Content-Type: application/x-www-form-urlencoded\r\n".
+                        "Content-Length: ".strlen($query)."\r\n".
+                        "User-Agent:MyAgent/1.0\r\n",
             'method' => 'POST',
-            'content' => http_build_query($data)
+            'content' => $query
         )
     );
 
